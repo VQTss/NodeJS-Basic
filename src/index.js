@@ -5,16 +5,20 @@ const app = express(); // function
 const port = 3000;
 const { engine } = require('express-handlebars');
 const db = require('./config/db/connect')
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+
 db.connect();
 db.sql;
 db.conn;
 //  middleware
-app.use(express.urlencoded({
-    extended: true
-}));
+// app.use(express.urlencoded({
+//     extended: true
+// }));
 // app.use(express.json);
 // HTTP logger
-app.use(morgan('combined'))
+// app.use(morgan('combined'))
 // Static
 app.use(express.static(path.join(__dirname,'public')));
 // Template engine

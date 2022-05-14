@@ -1,17 +1,16 @@
 const { sql, conn } = require('../../config/db/connect');
-const Student = require('./student.models');
-const studentModel = new Student();
+
 module.exports = function () {
     // Call back
-    this.getAll = async function (req,res) {
-        studentModel.getAll(function (err,data) {
-            if (!err) {
-                res.send({result: data})
+    this.getAll = async function (result) {
+        await conn.connect();
+        return await conn.request().query(" use Student select * from Student",function (err,data) {
+            if (data.recordset.length > 0) {
+                result(null, data.recordset);
             }else{
-                res.send({result: data})
+                result(true,null);
             }
-        })
-       
-    
-    };
+        });
+    }
+
 }
